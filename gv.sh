@@ -14,26 +14,27 @@ echo "按Enter继续";
 read
 
 echo "请输入你的cURL(bash)"
-read curl
+read POST
 
 echo "请输入你要申请的GV号（纯数字10位，如：3859998880）"
 read gv
 
-echo $curl > gv.txt
+echo $POST > post
 
-sed -i 's/mid=2/mid=6/' gv.txt
-sed -i 's/true%5D/%22%2B1'$gv'%22%2Ctrue%2C%22%22%5D/' gv.txt
+sed -i 's/curl/curl -s/' post
+sed -i 's/mid=2/mid=6/' post
+sed -i 's/true%5D/%22%2B1'$gv'%22%2Ctrue%2C%22%22%5D/' post
 
 echo "按Enter开始刷号";
 read
 
 
 
-for (( i=1; i>0; i++ ))
+for (( i=1; ; i++ ))
     do
-	a=`bash gv.txt`;
-        b='[[null,null,"There was an error with your request. Please try again."]]';
-	if [[ "$a" != "$b" ]];
+      respone=$(bash post);
+        string='[[null,null,"There was an error with your request. Please try again."]]';
+	if [[ "$respone" != "$string" ]];
         then
         echo "执行失败/申请成功";
         echo "共执行 $i 次";
